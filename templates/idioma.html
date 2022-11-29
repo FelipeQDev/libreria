@@ -1,0 +1,115 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% include 'header.html' %}
+    <link type="text/css" rel="stylesheet" href="{% static 'css/styleFormularios.css' %}">
+    <title>IDIOMA</title>
+</head>
+
+<body>
+
+    {% include 'navbar.html' %}
+    <div class="mx-5">
+        <div class="alert alert-info display-1 text-center">IDIOMA</div>
+
+        {% comment %} formulario ingresar {% endcomment %}
+        {% if ingresar %}
+        <div class="container">
+            <div class="row justify-content-center pt-5 mt-5 m-1">
+                <div class="col-md-6 col-lg-4 formulario">
+                    <form action="#" method="post">
+                        {% csrf_token %}
+                        <div class="form-group mx-sm-4 pb-3">
+                            <h6>Nombre</h6>
+                            <input type="text" class="form-control text-white" name="nomIdioma" placeholder="Nombre de Idioma" required=""/>
+                        </div>
+                        <div class="form-group mx-sm-4 pb-3">
+                            <h6>URL</h6>
+                            <input type="text" class="form-control text-white" name="urlIdioma" placeholder="URL de Imagen" required=""/>
+                        </div>
+
+                        <div class="form-group mx-sm-4 pb-3">
+                            <button type="submit" class="btn btn-success">Guardar</button>
+                            <a href="{% url "verIdiomas"%}" class="btn btn-primary">Volver <i class="bi bi-arrow-return-left"></i></a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            {% comment %} formulario editar {% endcomment %}
+            {% elif editar %}
+            <div class="container">
+                <div class="row justify-content-center pt-5 mt-5 m-1">
+                    <div class="col-md-6 col-lg-4 formulario">
+                        <form action="/idioma/editarIdioma/{{idioma.id}}" method="post">
+                            {% csrf_token %}
+                            <div class="form-group mx-sm-4 pb-3">
+                                <h6>Nombre de Idioma</h6>
+                                <input type="text" class="form-control text-white" name="nomIdioma" value="{{idioma.nombre}}" placeholder="Nombre de Idioma" required=""/>
+                            </div>
+                            <div class="form-group mx-sm-4 pb-3">
+                                <h6>URL de imagen</h6>
+                                <input type="text" class="form-control text-white" name="urlIdioma" value="{{idioma.url_imagen}}" placeholder="URL de Imagen" required=""/>
+                            </div>
+                            <div class="form-group mx-sm-4 pb-3">
+                                <h6>Vista previa imagen:</h6>
+                                <img src={{idioma.url_imagen}} class="card-img-top" width="137" height="73"
+                                    style="object-fit: contain;">
+                            </div>
+            
+            
+                            <div class="form-group mx-sm-4 pb-3">
+                                <button type="submit" class="btn btn-success">Actualizar</button>
+                                <a href="{% url "verIdiomas"%}" class="btn btn-primary">Volver <i
+                                        class="bi bi-arrow-return-left"></i></a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+            
+
+
+            
+
+            {% comment %} botón home, boton ingresar idioma y listado de los idiomas con opciones (editar, eliminar) {% endcomment %}
+            {% else %}
+            <a href="/idioma/ingresarIdioma" type="button" class="btn btn-success"> Ingresar Idioma </a>
+
+            <div class="row">
+                <div class="col-9" style="width: 100%;">
+                    <div class="row">
+                        {% for i in idiomas%}
+                        <div class="card m-2" style="width: 14rem;">
+                            <small class="text-muted">ID: {{i.id}}</small>
+                            <img src={{i.url_imagen}} class="card-img-top" width="137" height="73"
+                                style="object-fit: contain;">
+                            <div class="card-body">
+                                <h5 class="card-title">Idioma:<h6> {{i.nombre}}</h6>
+                                </h5>
+                                <a href="/idioma/editarIdioma/{{i.id}}" class="btn btn-primary">Editar</a>
+                                <a href="/idioma/eliminarIdioma/{{i.id}}" class="btn btn-danger">Eliminar</a>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+                integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+                crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
+                integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
+                crossorigin="anonymous"></script>
+        </div>
+
+</body>
+
+</html>

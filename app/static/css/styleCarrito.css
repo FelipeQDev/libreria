@@ -1,0 +1,71 @@
+* {
+    font-family: sans-serif;
+    margin:0;
+    box-sizing: border-box;
+}
+
+body {
+    background: f1fbff;
+    justify-content: center;
+    min-height: 100vh;
+    align-items: center;
+    background-color: #eef4fd;
+}
+
+table{
+    border-spacing: 0;
+    margin-top: 1rem;
+}
+thead{
+    background-color: #e7e7e7;
+}
+
+
+.tituloTabla{
+    font-family:Arial, Helvetica, sans-serif;
+    font-weight:bold ;
+}
+.tdTotal{
+    text-align: right;
+    color: rgb(152, 190, 94);
+    font-style:italic;
+}
+
+.container2{
+    display:flex;
+    flex-direction: column;
+    box-shadow: 10px 8px 5px 0px #bdbdbdbf;
+    width: 80%;
+    background-color: rgb(250, 250, 250);
+    border-radius: 25px;
+}
+.buttonLimpiar{
+    outline: none;
+    border: none;
+    background-color: rgb(245, 59, 59);
+    color:white;
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    border-radius: 15px;
+    text-transform: uppercase;
+    font-size: 15px;
+    cursor: pointer;
+}
+.buttonGuardar{
+    outline: none;
+    border: none;
+    background-color: rgb(101, 216, 90);
+    color: white;
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    border-radius: 15px;
+    text-transform: uppercase;
+    font-size: 15px;
+    cursor: pointer;
+}
+.buttonLimpiar:hover{
+    background-color: rgb(252, 118, 118);
+}
+.buttonGuardar:hover{
+    background-color: rgb(160, 235, 154);
+}

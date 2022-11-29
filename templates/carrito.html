@@ -1,0 +1,65 @@
+{% load static %}
+<link text="text/css" rel="stylesheet" href="{% static 'css/styleCarrito.css' %}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+
+<div class="container2">
+  <div class="alert" role="alert">
+    <table class="table table-borderless">
+      <thead>
+        <tr>
+          <!--Head tabla carrito-->
+          <h3 class="tituloTabla text-center">Carrito <i class="bi bi-cart"></i></h3>
+
+        </tr>
+        <tr>
+
+          <th>NOMBRE</th>
+          <th>PRECIO</th>
+          <th>CANTIDAD</th>
+        </tr>
+        <!--Fin Head tabla carrito-->
+      </thead>
+      <tbody>
+
+        {% if request.session.carrito.items %}
+        {% for key, value in request.session.carrito.items %}
+
+        <tr>
+          <td>{{value.titulo}}</td>
+          <td>{{value.total}}</td>
+          <td>{{value.cantidad}}
+            <a href="{% url 'Add' value.libro_id %}" class="badge btn btn-dark badge-dark">+</a>
+            <a href="{% url 'Sub' value.libro_id %}" class="badge btn btn-dark badge-dark">-</a>
+        </td>
+        </tr>
+        {% endfor %}
+        {% else %}
+        <tr>
+          <td colspan="3">
+            <div class="alert alert-danger text-center"> Sin Productos <i class="bi bi-exclamation-triangle-fill"></i>
+            </div>
+          </td>
+        </tr>
+        {% endif %}
+      </tbody>
+        <!-- Fin contenidocontenido tabla carrito-->
+    </table>
+    <form action= "{% url 'ingresarPedido' %}" method="post">
+      {% csrf_token %}
+      <p>Total: $ <input name="prePed" value="{{total_carrito}}" style="border: none; box-shadow: none; outline: none;" readonly /></p>
+      <div class="row text-center">
+        <div class="col-6">
+          {% if total_carrito == 0 %}
+          <button type="submit" class="btn buttonGuardar" disabled>Guardar</button>
+          <a href="{% url 'CLS' %}" class="btn buttonLimpiar">Limpiar</a>
+          {% else %}
+          <button type="submit" class="btn buttonGuardar" onclick="alert('Gracias por su compra')">Guardar</button>
+          <a href="{% url 'CLS' %}" class="btn buttonLimpiar">Limpiar</a>
+          {% endif %}
+        </div>
+      </div>
+    </form>
+
+
+  </div>
+</div>

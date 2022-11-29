@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% include 'header.html' %}
+    <link type="text/css" rel="stylesheet" href="{% static 'css/styleFormularios.css' %}">
+    <title>PEDIDOS</title>
+</head>
+<body>
+
+  {% include "navbar.html" %}
+  <div class="mx-5">
+    <div class="alert alert-info display-1 text-center">PEDIDOS</div>
+    {% comment %} lista de pedidos {% endcomment %}
+    <div class="row" >
+        <div class="col-9">
+            <div class="row">
+                {% for d in detalles %}
+                <div class="card m-2" style="width: 19rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">Numero de pedido: <h6>{{d.id}} </h6></h5>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Pedido el: {{d.fecha_pedido}}</li>
+                        <li class="list-group-item">Total: $ {{d.precio_total}}</li>
+                    </ul>
+                    <div class="card-body">
+                        <a href="/pedido/eliminarPedido/{{d.id}}" class="btn btn-danger">Eliminar</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+    integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
+    integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
+    crossorigin="anonymous"></script>
+  </div>
+
+    
+    
+</body>
+</html>

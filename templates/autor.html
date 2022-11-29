@@ -1,0 +1,125 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {% include 'header.html' %}
+  <link type="text/css" rel="stylesheet" href="{% static 'css/styleFormularios.css' %}">
+  <title>AUTOR</title>
+</head>
+
+<body>
+  {% include 'navbar.html' %}
+
+  <div class="mx-5" > 
+    
+    <div class="alert alert-info display-1 text-center">AUTORES</div>
+
+    {% comment %} formulario ingresar {% endcomment %}
+    {% if ingresar %}
+    <div class="container">
+      <div class="row justify-content-center pt-5 mt-5 m-1">
+        <div class="col-md-6 col-lg-4 formulario">
+          <form action="#" method="post">
+            {% csrf_token %}
+            <div class="form-group mx-sm-4 pb-3">
+              <h6>Nombre del Autor</h6>
+              <input type="text" class="form-control text-white" name="nomAutor" required=""/>
+            </div>
+            <div class="form-group mx-sm-4 pb-3">
+              <h6>Apellido del Autor</h6>
+              <input type="text" class="form-control text-white" name="apeAutor" required=""/>
+            </div>
+            <div class="form-group mx-sm-4 pb-3">
+              <h6>URL de imagen</h6>
+              <input type="text" class="form-control text-white" name="urlAutor" required=""/>
+            </div>
+            <div class="form-group mx-sm-4 pb-3">
+              <button type="submit" class="btn btn-success">Guardar</button>
+              <a href="{% url "verAutores"%}" class="btn btn-primary">Volver <i class="bi bi-arrow-return-left"></i></a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    {% comment %} formulario editar {% endcomment %}
+
+    {% elif editar %}
+    <div class="container">
+      <div class="row justify-content-center pt-5 mt-5 m-1">
+        <div class="col-md-6 col-lg-4 formulario">
+          <form action="/autor/editarAutor/{{autor.id}}" method="post">
+            {% csrf_token %}
+            <div class="form-group mx-sm-4 pb-3">
+              <h6>Nombre del Autor</h6>
+              <input type="text" class="form-control text-white" name="nomAutor" value="{{autor.nombre}}" required=""/>
+            </div>
+            <div class="form-group mx-sm-4 pb-3">
+              <h6>Apellido del Autor</h6>
+              <input type="text" class="form-control text-white" name="apeAutor" value="{{autor.apellido}}" required=""/>
+            </div>
+            <div class="form-group mx-sm-4 pb-3">
+              <h6>URL de imagen</h6>
+              <input type="text" class="form-control text-white" name="urlAutor" value="{{autor.url_imagen}}" required=""/>
+            </div>
+            <div class="form-group mx-sm-4 pb-3">
+              <h6>Vista previa imagen:</h6>
+              <img src={{autor.url_imagen}} class="card-img-top" class="card-img" width="200" height="200"
+                style="object-fit: contain;">
+            </div>
+
+            <div class="form-group mx-sm-4 pb-3">
+              <button type="submit" class="btn btn-success">Actualizar</button>
+              <a href="{% url "verAutores"%}" class="btn btn-primary">Volver <i class="bi bi-arrow-return-left"></i></a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+
+
+    {% comment %} boton home, boton ingresar y listado de autores con opciones(editar, eliminar) {% endcomment %}
+
+    {% else %}
+    <a href="/autor/ingresarAutor" type="button" class="btn btn-success"> Ingresar Autor </a>
+
+    <div class="row">
+      <div class="col-9" style="width: 100%;">
+        <div class="row">
+          {% for a in autores %}
+          <div class="card m-2" style="max-width: 235px;">
+            <small class="text-muted">ID: {{a.id}}</small> 
+            <img src={{a.url_imagen}} class="card-img" width="200" height="200" style="object-fit: contain;">
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"> <h5 class="card-title">Nombre: <h6>{{a.nombre}}  {{a.apellido}} </h6></h5></li>
+                </ul>
+                <a href="/autor/editarAutor/{{a.id}}" class="btn btn-primary">Editar</a>
+                <a href="/autor/eliminarAutor/{{a.id}}" class="btn btn-danger">Eliminar</a>
+            </div>                
+        </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      {% endif %}
+
+      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+        integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+        crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
+        integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
+        crossorigin="anonymous"></script>
+
+  </div>
+  
+
+  
+</body>
+
+</html>

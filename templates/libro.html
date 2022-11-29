@@ -1,0 +1,206 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- CSS only -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biblioteca</title>
+    {% include 'header.html' %}
+    <link text="text/css" rel="stylesheet" href="{% static 'css/styleFormularios.css' %}">
+</head>
+
+<body>
+
+    {% include 'navbar.html'%}
+    <div class="mx-5">
+        <div class="alert alert-info display-1 text-center">LIBROS</div>
+
+        {% comment %} formulario ingresar {% endcomment %}
+        {% if ingresar %}
+
+        <div class="container">
+            <div class="row justify-content-center pt-5 mt-5 m-1">
+                <div class="col-md-6 col-lg-4 formulario">
+                    <form action="#" method="post">
+                        {% csrf_token %}
+                        <div class="form-group mx-sm-4 pb-3">
+                            <h6>Titulo</h6>
+                            <input type="text" class="form-control text-white" name="titLibro" required=""/>
+                        </div>
+                        <div class="form-group mx-sm-4 pb-3">
+                            <h6>Autor</h6>
+                            <select name="autLibro" class="form-select">
+                                {% for al in autorLibros %}
+                                <option value="{{al.id}}">{{al.nombre}} {{al.apellido}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group mx-sm-4 pb-3">
+                            <h6>URL imagen</h6>
+                            <input type="text" class="form-control text-white" name="urlLibro" required=""/>
+                        </div>
+                        <div class="form-group mx-sm-4 pb-3">
+                            <h6>Editorial</h6>
+                            <select name="ediLibro" class="form-select">
+                                {% for el in editorialLibros %}
+                                <option value="{{el.id}}">{{el.nombre}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group mx-sm-4 pb-3">
+                            <h6>Idioma</h6>
+                            <select name="idiLibro" class="form-select">
+                                {% for il in idiomaLibros %}
+                                <option value="{{il.id}}">{{il.nombre}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group mx-sm-4 pb-3">
+                            <h6>Stock</h6>
+                            <input type="text" class="form-control text-white" name="stoLibro" required=""/>
+                        </div>
+                        <div class="form-group mx-sm-4 pb-3">
+                            <h6>Año</h6>
+                            <input type="text" class="form-control text-white" name="aniLibro" required=""/>
+                        </div>
+                        <div class="form-group mx-sm-4 pb-3">
+                            <h6>Precio</h6>
+                            <input type="text" class="form-control text-white" name="preLibro" required=""/>
+                        </div>
+            
+                        <div class="form-group mx-sm-4 pb-3 text-center">
+                            <button type="submit" class="btn btn-success">Guardar</button>
+                            <a href="{% url "verLibros"%}" class="btn btn-primary">Volver <i
+                                    class="bi bi-arrow-return-left"></i></a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+        
+
+        {% comment %} formulario editar {% endcomment %}
+        {% elif editar %}
+
+        <div class="container">
+            <div class="row justify-content-center pt-5 mt-5 m-1">
+                <div class="col-md-6 col-lg-4 formulario">
+                    <form action="/libro/editarLibro/{{libro.id}}" method="post">
+                        {% csrf_token %}
+                        <div class="form-group mx-sm-4 pb-3">
+                            <h6>Titulo</h6>
+                            <input type="text" class="form-control text-white" name="titLibro" value="{{libro.titulo}}" required=""/>
+                        </div>
+                        <div class="form-group mx-sm-4 pb-3">
+                            <h6>Autor</h6>
+                            <select name="autLibro" class="form-select">
+                                <option value="{{libro.autor.id}}" selected>{{libro.autor.nombre}} {{libro.autor.apellido}}
+                                    (MANTENER)</option>
+                                {% for al in autorLibros %}
+                                <option value="{{al.id}}">{{al.nombre}} {{al.apellido}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group mx-sm-4 pb-3">
+                            <h6>URL imagen</h6>
+                            <input type="text" class="form-control text-white" name="urlLibro" value="{{libro.url_imagen}}" required=""/>
+                        </div>
+                        <div class="form-group mx-sm-4 pb-3">
+                            <h6>Vista previa imagen:</h6>
+                            <img src={{libro.url_imagen}} class="card-img-top" height="400px" style="object-fit: contain;">
+                        </div>
+                        <div class="form-group mx-sm-4 pb-3">
+                            <h6>Editorial</h6>
+                            <select name="ediLibro" class="form-select">
+                                <option value={{libro.editorial.id}} selected>{{libro.editorial.nombre}} (MANTENER)</option>
+                                {% for el in editorialLibros %}
+                                <option value="{{el.id}}">{{el.nombre}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group mx-sm-4 pb-3">
+                            <h6>Idioma</h6>
+                            <select name="idiLibro" class="form-select">
+                                <option value={{libro.idioma.id}} selected>{{libro.idioma.nombre}} (MANTENER)</option>
+                                {% for il in idiomaLibros %}
+                                <option value="{{il.id}}">{{il.nombre}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group mx-sm-4 pb-3">
+                            <h6>Stock</h6>
+                            <input type="text" class="form-control text-white" name="stoLibro" value="{{libro.stock}}" />
+                        </div>
+                        <div class="form-group mx-sm-4 pb-3">
+                            <h6>Año</h6>
+                            <input type="text" class="form-control text-white" name="aniLibro" value="{{libro.anio}}" required=""/>
+                        </div>
+                        <div class="form-group mx-sm-4 pb-3">
+                            <h6>Precio</h6>
+                            <input type="text" class="form-control text-white" name="preLibro" value="{{libro.precio}}" required=""/>
+                        </div>
+            
+                        <div class="form-group mx-sm-4 pb-3">
+                            <button type="submit" class="btn btn-success">Actualizar</button>
+                            <a href="{% url "verLibros"%}" class="btn btn-primary">Volver <i
+                                    class="bi bi-arrow-return-left"></i></a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        
+
+        
+
+
+
+        {% comment %} boton home, boton ingresar y listado de libros con opciones(editar, eliminar) {% endcomment %}
+        {% else %}
+        <a href="/libro/ingresarLibro" type="button" class="btn btn-success"> Ingresar Libro </a>
+
+        <div class="row">
+            <div class="col-9" style="width: 100%;">
+                <div class="row">
+                    {% for l in libros %}
+                    <div class="card m-2" style="width: 19rem;">
+                        <small class="text-muted">ID: {{l.id}}</small>
+                        <img src={{l.url_imagen}} class="card-img-top" style="object-fit: contain;">
+                        <div class="card-body">
+                            <h5 class="card-title">Titulo: <h6>{{l.titulo}} </h6>
+                            </h5>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Autor: {{l.autor.nombre}} {{l.autor.apellido}}</li>
+                            <li class="list-group-item">Editorial: {{l.editorial.nombre}}</li>
+                            <li class="list-group-item">Idioma: {{l.idioma.nombre}}</li>
+                            <li class="list-group-item">Precio: ${{l.precio}}</li>
+                            <li class="list-group-item">Stock: {{l.stock}}</li>
+                        </ul>
+                        </ul>
+                        <div class="card-body">
+                            <a href="/libro/editarLibro/{{l.id}}" class="btn btn-primary">Editar</a>
+                            <a href="/libro/eliminarLibro/{{l.id}}" class="btn btn-danger">Eliminar</a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <!--Movilizacion de Carousel y Navegacion de Dropdawn items-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+            crossorigin="anonymous"></script>
+
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,130 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% include 'header.html' %}
+    <link type="text/css" rel="stylesheet" href="{% static 'css/styleFormularios.css' %}">
+    <title>EDITORIAL</title>
+</head>
+<body>
+  
+  {% include 'navbar.html' %}
+  <div class="mx-5">
+    <div class="alert alert-info display-1 text-center">EDITORIALES</div>
+
+    {% comment %} formulario ingresar {% endcomment %}
+    {% if ingresar %}
+    <div class="container">
+        <div class="row justify-content-center pt-5 mt-5 m-1">
+            <div class="col-md-6 col-lg-4 formulario">
+                <form action="#" method="post">
+                    {% csrf_token %}
+                    <div class="form-group mx-sm-4 pb-3">
+                        <h6>Nombre de la editorial</h6>
+                        <input type="text" class="form-control text-white" name="nomEditorial" placeholder="Nombre Editorial" required=""/>
+                    </div>
+                    <div class="form-group mx-sm-4 pb-3">
+                        <h6>Fono</h6>
+                        <input type="text" class="form-control text-white" name="fonEditorial" placeholder="Fono Editorial" required=""/>
+                    </div>
+                    <div class="form-group mx-sm-4 pb-3">
+                        <h6>Correo</h6>
+                        <input type="text" class="form-control text-white" name="corEditorial" placeholder="Correo Editorial" required=""/>
+                    </div>
+                    <div class="form-group mx-sm-4 pb-3">
+                        <h6>País</h6>
+                        <input type="text" class="form-control text-white" name="paiEditorial" placeholder="País Editorial" required=""/>
+                    </div>
+                    <div class="form-group mx-sm-4 pb-3">
+                        <button type="submit" class="btn btn-success">Guardar</button>
+                        <a href="{% url "verEditoriales"%}" class="btn btn-primary">Volver <i class="bi bi-arrow-return-left"></i></a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    
+
+
+
+
+    {% comment %} formulario editar {% endcomment %}
+    {% elif editar %}
+    <div class="container">
+        <div class="row justify-content-center pt-5 mt-5 m-1">
+            <div class="col-md-6 col-lg-4 formulario">
+                <form action="/editorial/editarEditorial/{{editorial.id}}" method="post">
+                    {% csrf_token %}
+                    <div class="form-group mx-sm-4 pb-3">
+                        <h6>Nombre de la editorial</h6>
+                        <input type="text" class="form-control text-white" name="nomEditorial" value="{{editorial.nombre}}" required=""/>
+                    </div>
+                    <div class="form-group mx-sm-4 pb-3">
+                        <h6>Fono</h6>
+                        <input type="text" class="form-control text-white" name="fonEditorial" value="{{editorial.fono}}" required=""/>
+                    </div>
+                    <div class="form-group mx-sm-4 pb-3">
+                        <h6>Correo</h6>
+                        <input type="text" class="form-control text-white" name="corEditorial" value="{{editorial.correo}}" required=""/>
+                    </div>
+                    <div class="form-group mx-sm-4 pb-3">
+                        <h6>País</h6>
+                        <input type="text" class="form-control text-white" name="paiEditorial" value="{{editorial.pais}}" required=""/>
+                    </div>
+            
+                    <div class="form-group mx-sm-4 pb-3">
+                        <button type="submit" class="btn btn-success">Actualizar</button>
+                        <a href="{% url "verEditoriales"%}" class="btn btn-primary">Volver <i class="bi bi-arrow-return-left"></i></a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    
+
+
+    
+    
+    {% comment %} boton home, boton ingresar y listado de editoriales con opciones(editar, eliminar) {% endcomment %}
+    {% else %}
+    <a href="/editorial/ingresarEditorial" type="button" class="btn btn-success"> Ingresar Editorial </a>
+
+    <div class="row" >
+        <div class="col-9">
+            <div class="row">
+                {% for e in editoriales %}
+                <div class="card m-2" style="width: 19rem;">
+                    <div class="card-body">
+                        <small class="text-muted">ID: {{e.id}}</small>
+                        <h5 class="card-title">Nombre: <h6>{{e.nombre}} </h6></h5>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Fono: {{e.fono}}</li>
+                        <li class="list-group-item">Correo: {{e.correo}}</li>
+                        <li class="list-group-item">País: {{e.pais}}</li>
+                    </ul>
+                    <div class="card-body">
+                        <a href="/editorial/editarEditorial/{{e.id}}" class="btn btn-primary">Editar</a>
+                        <a href="/editorial/eliminarEditorial/{{e.id}}" class="btn btn-danger">Eliminar</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+    integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
+    integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
+    crossorigin="anonymous"></script>
+  </div>
+    
+</body>
+</html>

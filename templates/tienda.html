@@ -1,0 +1,67 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- CSS only -->
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Biblioteca</title>
+  {% include 'header.html' %}
+  <link text="text/css" rel="stylesheet" href="{% static 'css/styleLibros.css' %}">
+</head>
+
+<body>
+
+  {% include 'navbar.html' %}
+
+  <div class="mx-5">
+    <div class="alert alert-info display-1 text-center">TIENDA</div>
+    <div class="row">
+      <div class="col-8">
+        <div class="row" style="padding: 10px 0;">
+          <div class="col-12">
+            <div class="row">
+              {% for l in libros %}
+              <div class="card m-2" style="width: 19rem;">
+                <img src={{l.url_imagen}} class="card-img-top" style="object-fit: contain;">
+                <div class="card-body">
+                  <h5 class="card-title">Titulo: <h6>{{l.titulo}} </h6>
+                  </h5>
+                </div>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item">Autor: {{l.autor.nombre}} {{l.autor.apellido}}</li>
+                  <li class="list-group-item">Editorial: {{l.editorial.nombre}}</li>
+                  <li class="list-group-item">Idioma: {{l.idioma.nombre}}</li>
+                  <li class="list-group-item">Precio: ${{l.precio}}</li>
+                </ul>
+                </ul>
+                <div class="card-body">
+                  <a href="{% url 'Add' l.id %}" class="btn btn-primary">Agregar al carrito</a>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-4 carritoCard">
+        {% include "carrito.html" %}
+      </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+      integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+      crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
+      integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
+      crossorigin="anonymous"></script>
+
+  </div>
+
+
+</body>
+
+</html>
